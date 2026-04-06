@@ -4,7 +4,9 @@
 
 ![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
-![Status](https://img.shields.io/badge/Status-Stable-green.svg)
+![Status](https://img.shields.io/badge/status-alpha-yellow)
+
+![Project Banner](https://github.com/MestreWalla/GTAV-Real-Impulse-Triggers-MOD/blob/main/Impulse%20Triggers.png "Banner of My Project")
 
 > Sinta cada detalhe do Los Santos nas suas mãos. Este plugin adiciona suporte nativo aos **Gatilhos de Impulso (Xbox)**, transformando a física do GTA V em vibrações precisas e imersivas.
 

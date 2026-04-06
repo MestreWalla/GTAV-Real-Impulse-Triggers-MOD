@@ -1,5 +1,7 @@
 # GTA V Impulse Triggers Mod (C++) (ALPHA)
 
+:warning: Não usar no online para não ser banido :warning:
+
 ![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
 ![Status](https://img.shields.io/badge/Status-Stable-green.svg)

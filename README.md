@@ -1,4 +1,4 @@
-# GTA V Impulse Triggers Mod (C++)
+# GTA V Impulse Triggers Mod (C++) (ALPHA)
 
 ![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)

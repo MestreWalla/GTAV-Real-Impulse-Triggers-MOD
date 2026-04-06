@@ -1,6 +1,6 @@
 # GTA V Impulse Triggers Mod (C++) (ALPHA)
 
-:warning: Não usar no online para não ser banido :warning:
+:warning: Do not use online to avoid being banned :warning:
 
 ![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
@@ -8,34 +8,34 @@
 
 ![Project Banner](https://github.com/MestreWalla/GTAV-Real-Impulse-Triggers-MOD/blob/main/Impulse%20Triggers.png "Banner of My Project")
 
-> Sinta cada detalhe do Los Santos nas suas mãos. Este plugin adiciona suporte nativo aos **Gatilhos de Impulso (Xbox)**, transformando a física do GTA V em vibrações precisas e imersivas.
+> Feel every detail of Los Santos in your hands. This plugin adds native support for **Impulse Triggers (Xbox)**, transforming GTA V’s physics into precise and immersive vibrations.
 
-## 🎮 Menu de Configuração In-Game (F5)
-O mod é totalmente configurável em tempo real. Pressione **F5** para abrir o menu e ajustar cada detalhe.
+## 🎮 In-Game Configuration Menu (F5)
+The mod is fully configurable in real time. Press **F5** to open the menu and adjust every detail.
 
-### Novidades na Versão Atual:
-- **Diagnóstico Preciso**: O HUD agora mostra exatamente quanta força está sendo enviada para cada motor em tempo real (Log Verde).
-- **Mira Inteligente**: O gatilho de mira (LT) agora dá um pulso tátil único ao iniciar o foco, em vez de vibrar continuamente.
-- **Detecção de Armas**: O mod agora ignora comandos de mira/tiro se você estiver desarmado, evitando vibrações desnecessárias.
-- **Correção de Navegação**: O menu foi corrigido e agora os ajustes coincidem perfeitamente com o item selecionado.
+### What’s New in the Current Version:
+- **Precise Diagnostics**: The HUD now shows exactly how much force is being sent to each motor in real time (Green Log).  
+- **Smart Aim**: The aiming trigger (LT) now gives a unique tactile pulse when starting focus, instead of vibrating continuously.  
+- **Weapon Detection**: The mod now ignores aim/shoot commands if you are unarmed, avoiding unnecessary vibrations.  
+- **Navigation Fix**: The menu has been corrected and adjustments now perfectly match the selected item.  
 
-## ✨ Funcionalidades e Eventos
-- **Física de Veículos**: Drifts, suspensão, colisões, troca de marchas e ABS.
-- **Combate Avançado**: Recuo de armas por categoria (Shotguns, Pistolas, etc) e pulso de dano recebido.
-- **Motor Danificado**: Feedback tátil no acelerador (RT) para falhas mecânicas.
-- **Telemetry HUD**: Veja em tempo real os sinais do jogo (**Amarelo**) e os comandos do controle (**Verde**).
+## ✨ Features and Events
+- **Vehicle Physics**: Drifts, suspension, collisions, gear shifts, and ABS.  
+- **Advanced Combat**: Weapon recoil by category (Shotguns, Pistols, etc.) and pulse feedback when taking damage.  
+- **Damaged Engine**: Tactile feedback on the accelerator (RT) for mechanical failures.  
+- **Telemetry HUD**: See in real time the game signals (**Yellow**) and controller commands (**Green**).  
 
-## 📋 Requisitos de Hardware
-Para sentir os **Impulse Triggers** (motores dentro dos gatilhos), o Windows exige:
-1. **Controle**: Xbox One ou Xbox Series original.
-2. **Conexão**: Deve estar conectado via **Cabo USB** ou **Adaptador Wireless Oficial**.
-   - *Nota: Bluetooth padrão não suporta vibração independente nos gatilhos.*
+## 📋 Hardware Requirements
+To feel the **Impulse Triggers** (motors inside the triggers), Windows requires:  
+1. **Controller**: Original Xbox One or Xbox Series.  
+2. **Connection**: Must be connected via **USB Cable** or **Official Wireless Adapter**.  
+   - *Note: Standard Bluetooth does not support independent trigger vibration.*  
 
-## 🛠️ Instalação
-1. Certifique-se de ter o **Script Hook V** instalado.
-2. Copie o arquivo `GTAVImpulseTriggers.asi` para a pasta raiz do GTA V.
-3. Inicie o jogo e use o menu **F5** para personalizar sua experiência.
+## 🛠️ Installation
+1. Make sure you have **Script Hook V** installed.  
+2. Copy the file `GTAVImpulseTriggers.asi` to the GTA V root folder.  
+3. Launch the game and use the **F5** menu to customize your experience.  
 
 ---
 
-*Transformando dados em sensações. Experiência hática de nova geração no PC.* ✨
+*Transforming data into sensations. Next-gen haptic experience on PC.* ✨

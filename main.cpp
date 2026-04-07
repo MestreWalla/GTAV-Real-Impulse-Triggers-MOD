@@ -88,6 +88,34 @@ void ApplyMotor(const MotorConfig& m, std::chrono::steady_clock::time_point star
     }
 }
 
+// Forward declaration
+void ApplyProfile(const VibeProfile& p, std::chrono::steady_clock::time_point startTime, double& lt, double& rt, double& lm, double& rm, bool continuous);
+
+// Helper function to handle pulsed events (start on condition, apply for duration, then stop)
+void HandlePulsedEvent(bool currentState, bool& previousState, bool& isActive, std::chrono::steady_clock::time_point& startTime, const VibeProfile& profile, double& ltV, double& rtV, double& lmV, double& rmV, const std::string& logStart, const std::string& logEnd) {
+    if (currentState && !previousState) {
+        isActive = true;
+        startTime = std::chrono::steady_clock::now();
+        Menu::Log(logStart, "~y~");
+    }
+
+    if (isActive) {
+        int maxDur = std::max({profile.lt.dur, profile.rt.dur, profile.lm.dur, profile.rm.dur});
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startTime).count();
+        if (elapsed >= maxDur) {
+            isActive = false;
+            Menu::Log(logEnd, "~w~");
+        } else {
+            ApplyProfile(profile, startTime, ltV, rtV, lmV, rmV, false);
+        }
+    }
+
+    if (!currentState && previousState) {
+        Menu::Log(logEnd + "_RELEASE", "~o~");
+    }
+    previousState = currentState;
+}
+
 // Apply an entire VibeProfile to all four motors.
 // This is the core place where config values are turned into actual motor outputs.
 void ApplyProfile(const VibeProfile& p, std::chrono::steady_clock::time_point startTime, double& lt, double& rt, double& lm, double& rm, bool continuous = false) {
@@ -201,92 +229,16 @@ void UpdateScript() {
     g_wasAiming = data.isAiming;
 
     // 3. Shooting Logic
-    // Shooting uses the consolidated Shoot_Other profile.
-    // It applies RT/LM/RM values for the configured shot duration and can overlap with aiming.
-    // Because ApplyProfile uses std::max per motor, if both aiming and shooting are active,
-    // the strongest motor value wins for each output.
-    if (data.isShooting && !g_isShootingActive) {
-        g_isShootingActive = true;
-        g_lastShotStartTime = now;
-        Menu::Log("RECV: WEAPON_FIRE (GRP:" + std::to_string(data.weaponGroup) + ")", "~y~");
-    }
-    
-    if (g_isShootingActive) {
-        int shotMaxDur = std::max({s.shootOther.lt.dur, s.shootOther.rt.dur, s.shootOther.lm.dur, s.shootOther.rm.dur});
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - g_lastShotStartTime).count();
-        if (elapsed >= shotMaxDur) {
-            g_isShootingActive = false;
-            Menu::Log("SHOT_END", "~w~");
-        } else {
-            ApplyProfile(s.shootOther, g_lastShotStartTime, ltV, rtV, lmV, rmV);
-        }
-    }
-    if (!data.isShooting && g_wasShooting) {
-        Menu::Log("SHOT_RELEASE", "~o~");
-    }
+    HandlePulsedEvent(data.isShooting, g_wasShooting, g_isShootingActive, g_lastShotStartTime, s.shootOther, ltV, rtV, lmV, rmV, "RECV: WEAPON_FIRE (GRP:" + std::to_string(data.weaponGroup) + ")", "SHOT_END");
 
     // 4. Melee Combat
-    if (data.isMeleeing && !g_isMeleeingActive) {
-        g_isMeleeingActive = true;
-        g_lastMeleeStartTime = now;
-        Menu::Log("RECV: MELEE_IMPACT", "~y~");
-    }
-    if (g_isMeleeingActive) {
-        int meleeMaxDur = std::max({s.meleeImpact.lt.dur, s.meleeImpact.rt.dur, s.meleeImpact.lm.dur, s.meleeImpact.rm.dur});
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - g_lastMeleeStartTime).count();
-        if (elapsed >= meleeMaxDur) {
-            g_isMeleeingActive = false;
-            Menu::Log("MELEE_END", "~w~");
-        } else {
-            ApplyProfile(s.meleeImpact, g_lastMeleeStartTime, ltV, rtV, lmV, rmV);
-        }
-    }
-    if (!data.isMeleeing && g_wasMeleeing) {
-        Menu::Log("MELEE_RELEASE", "~o~");
-    }
-    g_wasMeleeing = data.isMeleeing;
+    HandlePulsedEvent(data.isMeleeing, g_wasMeleeing, g_isMeleeingActive, g_lastMeleeStartTime, s.meleeImpact, ltV, rtV, lmV, rmV, "RECV: MELEE_IMPACT", "MELEE_END");
 
     // 5. Reloading
-    if (data.isReloading && !g_isReloadingActive) {
-        g_isReloadingActive = true;
-        g_lastReloadStartTime = now;
-        Menu::Log("RECV: RELOADING", "~y~");
-    }
-    if (g_isReloadingActive) {
-        int reloadMaxDur = std::max({s.reloading.lt.dur, s.reloading.rt.dur, s.reloading.lm.dur, s.reloading.rm.dur});
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - g_lastReloadStartTime).count();
-        if (elapsed >= reloadMaxDur) {
-            g_isReloadingActive = false;
-            Menu::Log("RELOAD_END", "~w~");
-        } else {
-            ApplyProfile(s.reloading, g_lastReloadStartTime, ltV, rtV, lmV, rmV);
-        }
-    }
-    if (!data.isReloading && g_wasReloading) {
-        Menu::Log("RELOAD_RELEASE", "~o~");
-    }
-    g_wasReloading = data.isReloading;
+    HandlePulsedEvent(data.isReloading, g_wasReloading, g_isReloadingActive, g_lastReloadStartTime, s.reloading, ltV, rtV, lmV, rmV, "RECV: RELOADING", "RELOAD_END");
 
     // 6. Weapon Switch
-    if (data.isWeaponSwitching && !g_isWeaponSwitchActive) {
-        g_isWeaponSwitchActive = true;
-        g_lastWeaponSwitchStartTime = now;
-        Menu::Log("RECV: WEAPON_SWITCH", "~y~");
-    }
-    if (g_isWeaponSwitchActive) {
-        int switchMaxDur = std::max({s.weaponSwitch.lt.dur, s.weaponSwitch.rt.dur, s.weaponSwitch.lm.dur, s.weaponSwitch.rm.dur});
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - g_lastWeaponSwitchStartTime).count();
-        if (elapsed >= switchMaxDur) {
-            g_isWeaponSwitchActive = false;
-            Menu::Log("WEAPON_SWITCH_END", "~w~");
-        } else {
-            ApplyProfile(s.weaponSwitch, g_lastWeaponSwitchStartTime, ltV, rtV, lmV, rmV);
-        }
-    }
-    if (!data.isWeaponSwitching && g_wasWeaponSwitching) {
-        Menu::Log("WEAPON_SWITCH_RELEASE", "~o~");
-    }
-    g_wasWeaponSwitching = data.isWeaponSwitching;
+    HandlePulsedEvent(data.isWeaponSwitching, g_wasWeaponSwitching, g_isWeaponSwitchActive, g_lastWeaponSwitchStartTime, s.weaponSwitch, ltV, rtV, lmV, rmV, "RECV: WEAPON_SWITCH", "WEAPON_SWITCH_END");
 
     // 7. Explosions Nearby
     if (data.hasExplosionNearby) {

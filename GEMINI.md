@@ -1,31 +1,50 @@
 # GTA V Impulse Triggers Mod - Project Status
 
 ## Overview
-This project is a high-performance C++ .asi plugin for GTA V (PC). It utilizes the `Windows.Gaming.Input` (WinRT) API to provide immersive haptic feedback via Xbox Impulse Triggers (LT/RT) and main rumble motors, based on real-time game physics and telemetry.
+This project is a high-performance C++ .asi plugin for GTA V (PC). It uses the `Windows.Gaming.Input` (WinRT) API to provide immersive haptic feedback through Xbox Impulse Triggers (LT/RT) and the main rumble motors, based on real-time game telemetry.
 
-## Recent Changes (Advanced Diagnostics & Combat Refinement)
-- **Granular Signal Logging:** 
-  - **RECV (Yellow)**: Now logs specific game data like `Weapon Group IDs` and `Player Health` to verify exact game states.
-  - **SEND (Green)**: Now displays real-time motor output values (e.g., `SEND: LT0 RT80 L20 R10`) allowing users to confirm exactly what intensities are being transmitted to the controller hardware.
-- **Combat Logic Overhaul:**
-  - **Weapon Detection**: Aiming and shooting haptics are now automatically disabled when the player is unarmed (prevents "ghost" vibrations when pressing LT/RT on foot).
-  - **Single-Pulse Aiming**: Aiming now triggers a distinct one-time pulse (customizable duration) instead of a continuous vibration, improving immersion and reducing battery drain.
-  - **Signal Priority**: Shooting signals now have top priority in the motor pipeline to ensure they aren't masked by background engine RPM vibration.
-- **Menu System Fixes:** 
-  - Resolved an index offset bug where menu selection would highlight the correct item but modify the parameter below it.
-  - Separated event headers from interactive options for cleaner navigation.
+## Current Status
+- **38 integrated haptic events** covering vehicle physics, combat, movement, damage, and environmental effects.
+- **Menu input isolation** implemented so the F5 config UI does not open GTA’s phone or interfere with gameplay controls.
+- **Improved diagnostics** with event start/end logs and release signals for better tuning.
 
-## Implementation Details
-- **Language:** C++17
-- **SDK:** Script Hook V SDK
-- **Input API:** Windows.Gaming.Input (WinRT)
+## Major Features
+- **Combat Feedback**: consolidated weapon fire into `Shoot_Other`, plus aiming, reloading, weapon switching, melee, getting shot, and explosion feedback.
+- **Aiming Pulse**: aiming now provides a brief vibration pulse when starting to aim, preventing continuous vibration while holding.
+- **Event Overlap**: multiple haptic events can occur simultaneously, with the strongest motor values taking precedence.
+- **Vehicle Coverage**: gear shifts, ABS, traction loss, drifting, suspension bumps, collisions, engine stutter, RPM, tire bursts, vehicle fire, and vehicle explosion.
+- **Vehicle Type States**: helicopter, airplane, and train vibration effects.
+- **Player Movement**: climbing, jumping, falling impact, swimming, parachuting, and sliding.
+- **Environmental/Status Effects**: lightning, earthquake, police chase, stunned, drowning, and poisoned.
 
-### Core Modules
-1. **ControllerManager:** High-level WinRT interface for thread-safe vibration control.
-2. **Telemetry:** Reads physical vectors, collision impacts, player/vehicle health, and refined weapon detection.
-3. **Menu System:** Custom native-based UI with multi-level state management.
-4. **Config:** Advanced INI management with hot-reloading.
+## Telemetry Improvements
+- Added stable state detection for `Aiming`, `Shooting`, `Melee`, `Reloading`, and `Weapon_Switch`.
+- Added weapon switch detection by comparing current weapon hashes across frames.
+- Added minimum vibration durations so short state flickers do not cut off haptic output.
+- Added menu-side frontend control blocking so arrow navigation stays inside the UI.
+
+## Fixed Issues
+- **Aiming pulse fixed**: aim vibration now gives a brief pulse when starting to aim, instead of continuous vibration while holding.
+- **Shooting reset bug fixed**: shot vibration now persists for the configured duration instead of restarting or cutting out each frame.
+- **Event overlap support**: multiple events can now coexist, with stronger vibrations overriding weaker ones per motor.
+- **Phone menu bug fixed**: opening the menu no longer triggers GTA phone UI with directional keys.
+- **Stronger shooting output**: right trigger now reaches 100% power, while main rumble motors provide robust support.
+
+## Event Set
+The mod currently supports the following events:
+- GearShift, ABS, TractionLoss, Drifting, SuspensionBump, Collision, EngineStutter, EngineRPM
+- DamageTaken, Aiming, Shoot_Other, Melee_Impact, Reloading, Weapon_Switch, Getting_Shot, Explosion, Blast_Wave, Electrocuted, Burning
+- Tire_Burst, Vehicle_On_Fire, Helicopter_Blades, Train_Vibration, Airplane_Turbulence
+- Climbing, Jumping, Falling_Impact, Swimming, Parachuting, Sliding
+- Lightning_Strike, Earthquake, Police_Chase
+- Stunned, Drowning, Poisoned
+- Window_Break, Vehicle_Explosion
+
+## Implementation Notes
+- All core event detection uses GTA natives and lightweight state tracking.
+- The menu and config system support live adjustments and profile saving.
+- The plugin compiles to `compilado/bin/GTAVImpulseTriggers.asi` using MSVC / Visual Studio 2022.
 
 ## Build Requirements
-- **Target:** `compilado/bin/GTAVImpulseTriggers.asi` (MSVC VS 2022)
+- **Target:** `compilado/bin/GTAVImpulseTriggers.asi`
 - **Libraries:** `WindowsApp.lib`, `Shlwapi.lib`, `User32.lib`, `compilado/lib/ScriptHookV.lib`

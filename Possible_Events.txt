@@ -1,0 +1,85 @@
+======================================
+EVENTOS DE VIBRAÇÃO POSSÍVEIS - GTA V
+======================================
+
+NOTAS IMPORTANTES:
+- Eventos podem se sobrepor; o valor de vibração mais forte por motor vence.
+- Mira dá pulso breve no início, não contínuo enquanto segura.
+- Todos os tiros usam o perfil consolidado "Shoot_Other".
+
+=== EVENTOS ATUALMENTE SUPORTADOS ===
+GearShift = Include
+ABS = Include
+TractionLoss = Include
+Drifting = Include
+SuspensionBump = Include
+Collision = Include
+EngineStutter = Include
+EngineRPM = Include
+DamageTaken = Include
+Aiming = Include
+Shoot_Other = Include
+Melee_Impact = Include
+Reloading = Include
+Weapon_Switch = Include
+Getting_Shot = Include
+Explosion = Include
+Blast_Wave = Include
+Electrocuted = Include
+Burning = Include
+Tire_Burst = Include
+Vehicle_On_Fire = Include
+Helicopter_Blades = Include
+Train_Vibration = Include
+Airplane_Turbulence = Include
+Climbing = Include
+Jumping = Include
+Falling_Impact = Include
+Swimming = Include
+Parachuting = Include
+Sliding = Include
+Lightning_Strike = Include
+Earthquake = Include
+Police_Chase = Include
+Stunned = Include
+Drowning = Include
+Poisoned = Include
+Window_Break = Include
+Vehicle_Explosion = Include
+
+=== EVENTOS NÃO IMPLEMENTADOS / FUTUROS ===
+ShootPistol = 
+ShootSMG = 
+ShootShotgun = 
+ShootHeavy = 
+MeleeHit = 
+HeadshotTaken = 
+PhoneCall = 
+MissionCompleted = 
+MissionFailed = 
+Death = 
+RainIntensity = 
+Wind = 
+Tornado = 
+NPCMeleeHit = 
+NPCShooting = 
+GrenadeLaunch = 
+RocketLaunch = 
+LaserShot = 
+CutsceneImpact = 
+CinematicShake = 
+CameraShake = 
+PlayerConnected = 
+PlayerDisconnected = 
+PlayerDied = 
+CellphoneNotification = 
+TextMessage = 
+RadioChange = 
+
+======================================
+NOTAS:
+- Os eventos marcados como "Include" já têm suporte no código atual.
+- `Shoot_Other` substitui perfis de arma individuais (Pistol/SMG/Shotgun/Heavy).
+- Aiming e Shoot_Other agora mantêm um tempo mínimo para que os motores respondam.
+- Eventos futuros dependem de telemetria adicional ou de novas detecções.
+======================================

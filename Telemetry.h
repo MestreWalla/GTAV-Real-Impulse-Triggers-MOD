@@ -19,6 +19,36 @@ struct VehicleTelemetry {
     unsigned int weaponGroup;
     bool isShooting;
     bool isAiming;
+    
+    // Additional combat events
+    bool isMeleeing;
+    bool isReloading;
+    bool isWeaponSwitching;
+    bool isBleeding;
+    bool hasExplosionNearby;
+    float explosionDistance;
+    
+    // Player state events
+    bool isStunned;
+    bool isDrowning;
+    bool isPoisoned;
+    bool isClimbing;
+    bool isJumping;
+    bool isFalling;
+    bool isSwimming;
+    bool isParachuting;
+    float fallHeight;
+    
+    // Vehicle state events
+    bool hasBlowoutTires;
+    bool isVehicleOnFire;
+    bool isInHelicopter;
+    bool isInPlane;
+    bool isInTrain;
+    
+    // Environmental
+    bool hasLightningNearby;
+    bool inPoliceChase;
 };
 
 class Telemetry {

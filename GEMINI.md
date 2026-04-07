@@ -8,7 +8,7 @@ This project is a high-performance C++ .asi plugin for GTA V (PC). It uses the `
 
 - **38 integrated haptic events** covering vehicle physics, combat, movement, damage, and environmental effects.
 - **Menu input isolation** implemented so the F5 config UI does not open GTA’s phone or interfere with gameplay controls.
-- **Code refactored** with helper functions for pulsed events, reducing duplication and improving maintainability.
+- **Code refactored** with helper functions for pulsed events, reducing duplication and improving maintainability. Config loading/saving now uses data structures for cleaner code.
 - **Improved diagnostics** with event start/end logs and release signals for better tuning.
 
 ## Major Features

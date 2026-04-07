@@ -21,7 +21,7 @@ The mod is fully configurable in real time. Press **F5** to open the menu and ad
 - **Weapon Consolidation**: All weapon firing now uses the consolidated `Shoot_Other` profile.
 - **Aiming Pulse**: `Aiming` now gives a brief vibration pulse when starting to aim, instead of continuous vibration while holding.
 - **Event Overlap**: Multiple events can occur simultaneously, with the strongest vibration per motor taking precedence.
-- **Code Cleanup**: Refactored with helper functions to reduce duplication and improve maintainability.
+- **Code Cleanup**: Refactored with helper functions to reduce duplication and improve maintainability. Config loading now uses structured data for all profiles.
 - **Stronger Feedback**: Right trigger shooting is now full-strength and left/right motors also pulse with consistent time.
 - **Menu Input Fix**: Arrow keys no longer open the phone while the menu is active.
 - **Detailed Diagnostics**: In-game logs show event start, completion, and release states.
